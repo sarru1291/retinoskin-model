@@ -29,7 +29,7 @@ def classifySkinLesion(image_path):
             # print('%s (score = %.5f)' % (human_string, score))
     # return('%s (score = %.5f)' % (human_string, score))
         dic={
-            human_string:score
+            human_string:`score`
         }
     return dic
 
