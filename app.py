@@ -8,18 +8,13 @@ app = Flask(__name__)
 @app.route('/api/model/test',methods=['POST'])
 def imageTestPost():
     incomingData=request.data
-
     incomingDataDic=json.loads(incomingData)
     imageURL=incomingDataDic['url']
     option=incomingDataDic['option']
-    # print(incomingDataDic['url'])
-    # image=Image.open(urllib.urlopen(imageURL))
     response=requests.get(imageURL,stream=True).raw
-    # print(image.format)
     with open('my_image.jpg', 'wb') as file:
         shutil.copyfileobj(response, file)
     del response
-    # print(response)
     if option=='retinopathy':
         output=pr.classifyDiabeticRetinopathy('my_image.jpg')
     else:
