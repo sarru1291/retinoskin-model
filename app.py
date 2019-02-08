@@ -22,15 +22,21 @@ def imageTestPost():
 
         if option=='retinopathy':
             output=pr.classifyDiabeticRetinopathy('my_image.jpg')
+        # output=pr.classifyDiabeticRetinopathy(imageURL);
         else:
             output=pr.classifySkinLesion('my_image.jpg')
-        
+        # output=pr.classifySkinLesion(imageURL)
+    
     return jsonify({'output':output})
 
 @app.route('/api/model/test',methods=['GET'])
 def imageTestGet():
     message='you have selected model GET method'
     return jsonify({'message':message})
+    # if option=='retinopathy':
+    # output=pr.classifyDiabeticRetinopathy('/home/sarru/Downloads/test/kaggle-skincancer/5_left.jpeg');
+        # output=pr.classifySkinLesion('/home/sarru/Downloads/test/kaggle-skincancer/5_left.jpeg')
+    # return jsonify({'output':output})
 
 if __name__ == '__main__':
     app.run(debug=True)

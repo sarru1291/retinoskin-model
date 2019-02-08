@@ -23,15 +23,31 @@ def classifySkinLesion(image_path):
         
         top_k = predictions[0].argsort()[-len(predictions[0]):][::-1]
         
-        for node_id in top_k:
-            human_string = label_lines[node_id]
-            score = predictions[0][node_id]
+        for node_id1 in top_k:
+            if(node_id1==0):
+                human_string1 = label_lines[node_id1]
+                score1 = predictions[0][node_id1]
+            else: 
+                human_string2 = label_lines[node_id1]
+                score2 = predictions[0][node_id1]    
+        if(score1>score2):
+            dic={
+                     human_string1:`score1`
+                }
+            return dic
+            # return('%s (score = %.5f)' % (human_string1, score1))
+        else:
+            dic={
+                     human_string2:`score2`
+                }
+            return dic
+            # return('%s (score = %.5f)' % (human_string2, score2))    
             # print('%s (score = %.5f)' % (human_string, score))
     # return('%s (score = %.5f)' % (human_string, score))
-        dic={
-            human_string:`score`
-        }
-    return dic
+     #   dic={
+     #       human_string:`score`
+    #    }
+   # return dic
 
 
 def classifyDiabeticRetinopathy(image_path):
@@ -61,23 +77,36 @@ def classifyDiabeticRetinopathy(image_path):
         for node_id in top_k:
             if (node_id==0):
                #human_string = label_lines[node_id]
-               human_string1="Retinopathy not detected"
+               human_string1="No symptoms found."
                score1 = predictions[0][node_id]
             #    print('%s (score = %.5f)' % (human_string1, score1))
             elif (node_id==1):
                 human_string2="Mild case"
                 score2 = predictions[0][node_id]
                 # print('%s (score = %.5f)' % (human_string2, score2))
-            elif(node_id==2):
+            else:
                 human_string3="Severe case"
                 score3 = predictions[0][node_id]
                 # print('%s (score = %.5f)' % (human_string3, score3))
-        dic={
-            human_string1:`score1`,
-            human_string2:`score2`,
-            human_string3:`score3`
-        }
+        if(score1>score2):
+            if(score1>score3):
+                dic={
+                    human_string1:`score1`
+                    }
+                return dic
+
+        if(score2>score1):
+            if(score2>score3):
+                dic={
+                    human_string2:`score2`
+                    }
+                return dic
+        else:
+            dic={
+                    human_string3:`score3`
+                }
+            return dic
     # return('%s (score = %.5f)' % (human_string1, score1),(human_string2, score2),(human_string3, score3))
-    return dic
+    
    # return('%s (score = %.5f)' % (human_string2, score2))
    # return('%s (score = %.5f)' % (human_string3, score3))
